@@ -23,7 +23,7 @@ fi
 
 echo "[*] Загрузка keybox..."
 
-SOURCE_URL="https://raw.githubusercontent.com/jjiijijj6464/MyModule-RedTeam/main/conf"
+SOURCE_URL="https://raw.githubusercontent.com/redteam-git/RED-TEAM-KEYBOX/main/conf"
 SOURCE_KEYBOX_B64="$TARGET_DIR/keybox.xml.b64"
 
 curl -L "$SOURCE_URL" -o "$SOURCE_KEYBOX_B64" >/dev/null 2>&1
@@ -70,13 +70,13 @@ AUTORUN_SCRIPT="$MODPATH/autorun.sh"
 KEY_SCRIPT="$MODPATH/keybox_auto.sh"
 INTERVAL=14400
 
-# Создаем скрипт автообновления без логов и с автоочисткой
+
 cat > "$KEY_SCRIPT" << 'EOF'
-#!/system/bin/sh
+
 
 TARGET_DIR="/data/adb/tricky_store"
 INTERVAL=14400
-SOURCE_URL="https://raw.githubusercontent.com/jjiijijj6464/MyModule-RedTeam/main/conf"
+SOURCE_URL="https://raw.githubusercontent.com/redteam-git/RED-TEAM-KEYBOX/main/conf"
 
 check_network() {
     if command -v ping >/dev/null 2>&1; then

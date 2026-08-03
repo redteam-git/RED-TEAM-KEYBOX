@@ -3,7 +3,7 @@
 MODDIR="/data/adb/modules/red_team"
 TARGET_DIR="/data/adb/tricky_store"
 INTERVAL=14400
-SOURCE_URL="https://raw.githubusercontent.com/jjiijijj6464/MyModule-RedTeam/main/conf"
+SOURCE_URL="https://raw.githubusercontent.com/redteam-git/RED-TEAM-KEYBOX/main/conf"
 
 check_network() {
     if command -v ping >/dev/null 2>&1; then
