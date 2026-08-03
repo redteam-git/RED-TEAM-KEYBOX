@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#1a0a0a" />
+  <title>RED TEAM Manager</title>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:FILL@1" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/beercss@3.9.8/dist/cdn/beer.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    .menu-btn, 
+    button.menu-btn,
+    .refresh-btn,
+    .lang-select-btn {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-align: center !important;
+      line-height: 1.2 !important;
+      padding: 0.75rem 1rem !important;
+      gap: 0.5rem !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
+
+    .bottom-nav .nav-btn {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      text-align: center !important;
+    }
+
+    .bottom-nav .nav-btn span {
+      line-height: 1 !important;
+      margin-top: 2px !important;
+    }
+  </style>
+</head>
+<body class="dark">
+  <main id="app" class="page-shell">
+    <!-- ==================== HOME PAGE ==================== -->
+    <section id="home-page" class="page active">
+      <article class="surface page-card">
+        <h4 class="center-align page-title">🔴 RED TEAM KEYBOX</h4>
+
+        <div class="home-status-grid">
+          <article id="module-version-card" class="beer-card version-card" title="Нажмите, чтобы посмотреть историю выполнения скриптов">
+            <div class="status-card-top">
+              <span class="card-icon-badge">🏷️</span>
+              <h6 class="card-title no-margin" data-i18n="home_version">Версия модуля</h6>
+            </div>
+            <p id="version-text" class="version-value">—</p>
+            <p id="status-bar-text" class="status-badge offline" data-i18n="home_status_online">Онлайн</p>
+          </article>
+
+          <article class="beer-card clock-card">
+            <div class="status-card-top">
+              <span class="card-icon-badge">🕒</span>
+              <h6 class="card-title no-margin" data-i18n="home_clock_date">Дата и время</h6>
+            </div>
+            <p id="clock-time" class="clock-time">--:--:--</p>
+            <p id="clock-date" class="clock-date">--/--/--</p>
+          </article>
+
+          <article class="beer-card device-card">
+            <div class="status-card-top">
+              <span class="card-icon-badge">📱</span>
+              <h6 class="card-title no-margin" data-i18n="home_device">Устройство</h6>
+            </div>
+            <ul class="device-info-list">
+              <li><span data-i18n="home_model">Модель</span><b id="device-model">—</b></li>
+              <li><span data-i18n="home_android">Android</span><b id="android-version">—</b></li>
+              <li><span data-i18n="home_kernel">Ядро</span><b id="kernel-version">—</b></li>
+              <li><span data-i18n="home_root_impl">Реализация Root</span><b id="root-type">—</b></li>
+            </ul>
+          </article>
+        </div>
+
+        <button id="refresh-info-btn" type="button" class="menu-btn refresh-btn" onclick="refreshDeviceInfo()" data-i18n="home_refresh">🔄 Обновить информацию</button>
+      </article>
+    </section>
+
+    <!-- ==================== MAIN MENU ==================== -->
+    <section id="actions-page" class="page">
+      <article class="surface page-card">
+        <h5 class="page-title center-align" data-i18n="menu_title">📋 Главное меню</h5>
+
+        <article class="surface-variant block menu-card">
+          <h6 class="section-heading" data-i18n="menu_keyboard">🔑 Keybox</h6>
+          <div class="stack">
+            <div class="menu-item">
+              <button class="menu-btn" onclick="execScript('keybox.sh')" data-i18n="menu_install_red_keyboard">⚡ Установить RED Keybox</button>
+              <p class="menu-desc" data-i18n="menu_install_red_keyboard_desc">Применяет keybox устройства для прохождения проверки целостности.</p>
+            </div>
+            <div class="menu-item">
+              <button class="menu-btn" onclick="execScript('target.sh')" data-i18n="menu_setup_target">📄 Настроить target.txt</button>
+              <p class="menu-desc" data-i18n="menu_setup_target_desc">Задаёт список приложений, для которых будет использоваться keybox.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="surface-variant block menu-card">
+          <h6 class="section-heading" data-i18n="menu_gps">📦 GMS</h6>
+          <div class="stack">
+            <div class="menu-item">
+              <button class="menu-btn" onclick="execScript('kill_and_clean_google.sh')" data-i18n="menu_clear_google_services">🛑 Очистить и остановить Google-сервисы</button>
+              <p class="menu-desc" data-i18n="menu_clear_google_services_desc">Останавливает сервисы Google и очищает их кэш/данные для сброса состояния.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="surface-variant block menu-card">
+          <h6 class="section-heading" data-i18n="menu_pif">🔧 PIF</h6>
+          <div class="stack">
+            <div class="menu-item">
+              <button class="menu-btn" onclick="execScript('pif.sh')" data-i18n="menu_setup_pif">🔒 Настроить PIF</button>
+              <p class="menu-desc" data-i18n="menu_setup_pif_desc">Обновляет fingerprint устройства для Play Integrity Fix.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="surface-variant block menu-card">
+          <h6 class="section-heading" data-i18n="menu_security">🔒 Безопасность</h6>
+          <div class="stack">
+            <div class="menu-item">
+              <button class="menu-btn" onclick="execScript('security_patch.sh')" data-i18n="menu_install_security_patch">🛡️ Установить патч безопасности</button>
+              <p class="menu-desc" data-i18n="menu_install_security_patch_desc">Прописывает актуальную дату security patch level в системе.</p>
+            </div>
+          </div>
+        </article>
+      </article>
+    </section>
+
+    <!-- ==================== ADVANCED MENU ==================== -->
+    <section id="advance-menu" class="page">
+      <article class="surface page-card">
+        <h5 class="page-title center-align" data-i18n="advance_menu_title">⚙️ Расширенное меню</h5>
+
+        <!-- БЛОК: ОНЛАЙН УСТАНОВКА МОДУЛЕЙ -->
+        <article class="surface-variant block menu-card">
+          <h6 class="section-heading" data-i18n="menu_downloads_title">⬇️ Онлайн Установка Модулей</h6>
+          <div class="stack">
+            <div class="menu-item">
+              <button class="menu-btn" onclick="execScript('install_tee.sh')" data-i18n="menu_download_tee">⚡ Установить TEE Simulator RS</button>
+              <p class="menu-desc" data-i18n="menu_download_tee_desc">Скачивает и устанавливает последний релиз TEESimulator-RS.</p>
+            </div>
+            <div class="menu-item">
+              <button class="menu-btn" onclick="execScript('install_zygisk.sh')" data-i18n="menu_download_zygisk">⚡ Установить Zygisk Next</button>
+              <p class="menu-desc" data-i18n="menu_download_zygisk_desc">Скачивает и устанавливает последний релиз ZygiskNext.</p>
+            </div>
+            <div class="menu-item">
+              <button class="menu-btn" onclick="execScript('install_pif.sh')" data-i18n="menu_download_pif">⚡ Установить Play Integrity Fix</button>
+              <p class="menu-desc" data-i18n="menu_download_pif_desc">Скачивает и устанавливает последний релиз Play Integrity Fix.</p>
+            </div>
+            <div class="menu-item">
+              <button class="menu-btn" onclick="execScript('install_hma.sh')" data-i18n="menu_download_hma">⚡ Установить Hide My Applist</button>
+              <p class="menu-desc" data-i18n="menu_download_hma_desc">Скачивает и устанавливает последний релиз HMA.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="surface-variant block menu-card">
+          <h6 class="section-heading" data-i18n="advance_additional_fixes">🛠️ Дополнительные исправления</h6>
+          <div class="stack">
+            <div class="menu-item">
+              <button class="menu-btn" onclick="execScript('twrp.sh')" data-i18n="advance_fix_detect_recovery">🔧 Исправить обнаружение Recovery</button>
+              <p class="menu-desc" data-i18n="advance_fix_detect_recovery_desc">Скрывает следы кастомного recovery от проверяющих приложений.</p>
+            </div>
+            <div class="menu-item">
+              <button class="menu-btn" onclick="execScript('boot_hash.sh')" data-i18n="advance_set_verified_boot">🔐 Настроить Verified Boothash</button>
+              <p class="menu-desc" data-i18n="advance_set_verified_boot_desc">Прописывает корректный хэш загрузки для прохождения верификации boot.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="surface-variant block menu-card">
+          <h6 class="section-heading" data-i18n="advance_keybox_monitoring">🔄 Мониторинг Keybox</h6>
+          <div class="stack">
+            <div class="menu-item">
+              <button class="menu-btn" onclick="execScript('monitor_on.sh')" data-i18n="advance_enable_monitoring">🟢 Включить мониторинг</button>
+              <p class="menu-desc" data-i18n="advance_enable_monitoring_desc">Запускает фоновую проверку и автообновление keybox по расписанию.</p>
+            </div>
+            <div class="menu-item">
+              <button class="menu-btn" onclick="execScript('monitor_off.sh')" data-i18n="advance_disable_monitoring">🔴 Выключить мониторинг</button>
+              <p class="menu-desc" data-i18n="advance_disable_monitoring_desc">Останавливает фоновую службу мониторинга keybox.</p>
+            </div>
+            <div class="menu-item">
+              <button class="menu-btn" onclick="execScript('monitor_status.sh')" data-i18n="advance_monitoring_status">📊 Статус мониторинга</button>
+              <p class="menu-desc" data-i18n="advance_monitoring_status_desc">Показывает состояние демона, интервал проверки и файл keybox.xml.</p>
+            </div>
+          </div>
+        </article>
+      </article>
+    </section>
+
+    <!-- ==================== SETTINGS PAGE ==================== -->
+    <section id="settings-page" class="page">
+      <article class="surface page-card">
+        <h5 class="page-title center-align" data-i18n="settings_title">⚙️ Настройки</h5>
+
+        <article class="surface-variant block">
+          <h6 data-i18n="settings_language">🌐 Язык</h6>
+          <div class="custom-dropdown lang-select-wrap">
+            <button id="lang-btn" class="menu-btn lang-select-btn">🇷🇺 Русский</button>
+            <ul id="lang-options" class="dropdown-list lang-options-list">
+              <li data-lang="ru">🇷🇺 Русский</li>
+              <li data-lang="uk">🇺🇦 Українська</li>
+              <li data-lang="be">🇧🇾 Беларуская</li>
+              <li data-lang="en">🇬🇧 English</li>
+              <li data-lang="de">🇩🇪 Deutsch</li>
+              <li data-lang="pt">🇵🇹 Português</li>
+              <li data-lang="it">🇮🇹 Italiano</li>
+              <li data-lang="ja">🇯🇵 日本語</li>
+              <li data-lang="af">🇿🇦 Afrikaans</li>
+              <li data-lang="ar">🇸🇦 العربية</li>
+              <li data-lang="vi">🇻🇳 Tiếng Việt</li>
+              <li data-lang="zh">🇨🇳 中文</li>
+              <li data-lang="es">🇪🇸 Español</li>
+              <li data-lang="fr">🇫🇷 Français</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="surface-variant block">
+          <div class="appearance-header">
+            <h6 class="appearance-title" data-i18n="settings_appearance">Внешний вид</h6>
+          </div>
+          <div class="custom-dropdown lang-select-wrap">
+            <button id="theme-mode-btn" class="menu-btn lang-select-btn" data-i18n="theme_mode_dark">Тёмная</button>
+            <ul id="theme-mode-options" class="dropdown-list lang-options-list">
+              <li data-mode="dark" onclick="setThemeMode('dark')" data-i18n="theme_mode_dark">Тёмная</li>
+              <li data-mode="light" onclick="setThemeMode('light')" data-i18n="theme_mode_light">Светлая</li>
+              <li data-mode="auto" onclick="setThemeMode('auto')" data-i18n="theme_mode_auto">Авто (Системная)</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="surface-variant block">
+          <h6 data-i18n="settings_clock_format">🕐 Формат времени</h6>
+          <div class="custom-dropdown lang-select-wrap">
+            <button id="clock-format-btn" class="menu-btn lang-select-btn" data-i18n="clock_format_auto">🔄 Авто (Устройство)</button>
+            <ul id="clock-format-options" class="dropdown-list lang-options-list">
+              <li data-format="auto" data-i18n="clock_format_auto">🔄 Авто</li>
+              <li data-format="24h" data-i18n="clock_format_24h">24-часовой (00:00)</li>
+              <li data-format="12h" data-i18n="clock_format_12h">12-часовой (AM/PM)</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="surface-variant block update-support">
+          <h6 data-i18n="update_title">📢 ОБНОВЛЕНИЕ И ПОДДЕРЖКА</h6>
+          <div class="stack" style="margin-top: 0.5rem;">
+            <button class="menu-btn" onclick="openUrl('https://github.com/jjiijijj6464/MyModule-RedTeam/releases/')" data-i18n="update_github">🐙 Посмотреть на GitHub</button>
+            <button class="menu-btn" onclick="openUrl('https://t.me/REDTEAMMODULE')" data-i18n="update_telegram">📲 Наш Telegram-канал</button>
+          </div>
+          <p class="small-text" data-i18n="update_note">Присоединяйтесь к нашему Telegram-каналу или загляните на GitHub для получения обновлений, участия в разработке и технических обсуждений.</p>
+        </article>
+
+        <article id="dev-info" class="surface-variant block">
+          <h6 data-i18n="settings_contributors">👥 Разработчики проекта</h6>
+          <div id="contrib-list" class="contrib-grid">
+            <button class="contrib-card" type="button" onclick="openUrl('https://t.me/fhwjww')">
+              <img src="https://raw.githubusercontent.com/jjiijijj6464/MyModule-RedTeam/main/avatar/avatar.png" alt="Nikita" onerror="this.src='/common/icon/default-avatar.png'" />
+              <div class="contrib-name">Nikita</div>
+              <div class="contrib-role" data-i18n="role_Founder & Module Developer">Основатель и разработчик модуля</div>
+            </button>
+            <button class="contrib-card" type="button" onclick="openUrl('https://t.me/DperehodnikD')">
+              <img src="https://raw.githubusercontent.com/jjiijijj6464/MyModule-RedTeam/main/avatar/avatar1.png" alt="Dmitry" onerror="this.src='/common/icon/default-avatar.png'" />
+              <div class="contrib-name">Dmitry</div>
+              <div class="contrib-role" data-i18n="role_Founder & Module Developer">Основатель и разработчик модуля</div>
+            </button>
+          </div>
+        </article>
+      </article>
+    </section>
+  </main>
+
+  <!-- ==================== BOTTOM NAVIGATION ==================== -->
+  <nav class="bottom-nav surface-container-high">
+    <button class="nav-btn active" type="button" data-page="home-page">
+      <i class="material-symbols-rounded nav-icon" aria-hidden="true">home</i>
+      <span data-i18n="nav_home">Главная</span>
+    </button>
+    <button class="nav-btn" type="button" data-page="actions-page">
+      <i class="material-symbols-rounded nav-icon" aria-hidden="true">grid_view</i>
+      <span data-i18n="nav_menu">Меню</span>
+    </button>
+    <button class="nav-btn" type="button" data-page="advance-menu">
+      <i class="material-symbols-rounded nav-icon" aria-hidden="true">tune</i>
+      <span data-i18n="nav_advancemenu">Menu +</span>
+    </button>
+    <button class="nav-btn" type="button" data-page="settings-page">
+      <i class="material-symbols-rounded nav-icon" aria-hidden="true">settings</i>
+      <span data-i18n="nav_settings">Настройки</span>
+    </button>
+  </nav>
+
+  <div id="snackbar" class="snackbar" role="status" aria-live="polite"></div>
+
+  <!-- Dialogs -->
+  <div id="script-output-overlay" class="overlay blur"></div>
+  <dialog id="script-output-dialog" class="snackbar-dialog">
+    <h5 id="script-output-title">📜 Выполнение скрипта</h5>
+    <div id="script-output-content" class="snackbar-output-pre"></div>
+    <div id="script-output-status" style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;"></div>
+    <nav class="right-align history-dialog-actions">
+      <button id="script-output-close" class="history-btn">❌ Закрыть</button>
+    </nav>
+  </dialog>
+
+  <div id="script-history-overlay" class="overlay blur"></div>
+  <dialog id="script-history-dialog" class="snackbar-dialog">
+    <h5>📜 Script Outputs</h5>
+    <div id="script-history-content" class="snackbar-output-pre"></div>
+    <nav class="right-align history-dialog-actions">
+      <button id="script-history-clear" class="history-btn">🗑️ Clear</button>
+      <button id="script-history-close" class="history-btn">❌ Close</button>
+    </nav>
+  </dialog>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/beercss@3.9.8/dist/cdn/beer.min.js" type="module"></script>
+  <script src="js/language.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/redirect.js"></script>
+  <script src="js/device.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/version.js"></script>
+  <script src="js/dev.js"></script>
+</body>
+</html>

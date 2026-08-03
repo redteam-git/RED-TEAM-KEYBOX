@@ -1,0 +1,8 @@
+id=red_team
+name=RED TEAM KEYBOX 
+version=v4.0
+versionCode=4
+author=@fhwjww & @rootDima
+description=модуль для обновления keybox 
+updateJson=https://raw.githubusercontent.com/jjiijijj6464/MyModule-RedTeam/main/update.json
+banner=banner.png
