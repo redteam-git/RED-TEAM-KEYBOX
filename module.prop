@@ -1,7 +1,7 @@
 id=red_team
 name=RED TEAM KEYBOX 
-version=v4.0
-versionCode=4
+version=v5.1
+versionCode=5.1
 author=@fhwjww & @rootDima
 description=модуль для обновления keybox 
 updateJson=https://raw.githubusercontent.com/redteam-git/RED-TEAM-KEYBOX/main/update.json
